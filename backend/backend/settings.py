@@ -129,22 +129,26 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     },
-# }
-DATABASES = {
-    'default': {
-        'ENGINE': env('DB_ENGINE', default='django.db.backends.postgresql_psycopg2'),
-        'NAME': env('DB_NAME', default='amosdb'),
-        'USER': env('DB_USER', default='amos'),
-        'PASSWORD': env('DB_PASSWORD', default='12345678'),
-        'HOST': env('DB_HOST', default='localhost'),
-        'PORT': env('DB_PORT', default='5432'),
-    }
-}
+
+
+if env('DB_TYPE') == 'postgres':
+  DATABASES = {
+      'default': {
+          'ENGINE': env('DB_ENGINE', default='django.db.backends.postgresql_psycopg2'),
+          'NAME': env('DB_NAME', default='amosdb'),
+          'USER': env('DB_USER', default='amos'),
+          'PASSWORD': env('DB_PASSWORD', default='12345678'),
+          'HOST': env('DB_HOST', default='localhost'),
+          'PORT': env('DB_PORT', default='5432'),
+      }
+  }
+else:
+  DATABASES = {
+      'default': {
+          'ENGINE': 'django.db.backends.sqlite3',
+          'NAME': BASE_DIR / 'db.sqlite3',
+      },
+  }
 
 
 
